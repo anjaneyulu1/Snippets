@@ -53,6 +53,30 @@ Node* insertAfter(Node* head, int afterNode, int data)
   return newHead;
 }
 
+Node* deleteNode(Node* head, int data)
+{
+    Node* effectHead = head;
+  if(head == NULL) return effectHead;
+  if(head->data == data)
+  {
+      effectHead = head->next;
+      delete head; return effectHead;
+  }
+  
+  while (head->next)
+  {
+      if(head->next->data == data)
+      {
+          Node* del = head->next;
+        head->next = head->next->next;
+        delete del;
+        break;
+      }
+      head = head->next;
+  }
+  return effectHead;
+}
+
 void printList(Node *node)  
 {  
     while (node != NULL)  
@@ -85,8 +109,11 @@ int main()
   insertAfter(head, 5, 6);
   head = insertAtBegin(head, 0);
   
-  printList(head);
   
+  printList(head);
+  head = deleteNode(head, 5);
+  cout << ":: After deleting 5\n";
+  printList(head);
   cleanMemory(head);
   return 0; 
 }
